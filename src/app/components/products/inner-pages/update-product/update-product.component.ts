@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {MatButton} from "@angular/material/button";
-import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
+import { ProductService } from '../../../../service/product.service';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-update-product',
@@ -10,7 +12,8 @@ import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from
     MatDialogActions,
     MatDialogClose,
     MatDialogContent,
-    MatDialogTitle
+    MatDialogTitle,
+    ReactiveFormsModule
   ],
   templateUrl: './update-product.component.html',
   styleUrl: './update-product.component.scss'
@@ -41,9 +44,9 @@ export class UpdateProductComponent implements OnInit {
       unitPrice: this.form.value.unitPrice,
       description: this.form.value.description
     }
-    this.productService.update(obj, this.data?.product?.propertyId).subscribe(response => {
+    this.productService.update(obj, this.data?.product?.propertyId).subscribe((response: any) => {
       this.dialogRef.close(true);
-    }, error => {
+    }, (error: { error: { message: any; }; }) => {
       console.log(error?.error?.message);
     })
   }

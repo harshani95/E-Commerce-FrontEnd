@@ -15,6 +15,7 @@ import {ProductService} from "../../service/product.service";
 import {CurrencyPipe, NgForOf} from "@angular/common";
 import { ForexService } from '../../service/forex.service';
 import { ClipboardService } from '../../service/clipboard.service';
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-products',
@@ -26,7 +27,8 @@ import { ClipboardService } from '../../service/clipboard.service';
     ReactiveFormsModule,
     NgForOf,
     CurrencyPipe,
-    MatTooltip
+    MatTooltip,
+    MatPaginator
   ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
