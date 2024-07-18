@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
   CustomerStatusManagerComponent
 } from "../customers/inner/customer-status-manager/customer-status-manager.component";
@@ -9,6 +9,12 @@ import {MatDialog} from "@angular/material/dialog";
 import { UpdateProductComponent } from './inner-pages/update-product/update-product.component';
 import { NewProductComponent } from './inner-pages/new-product/new-product.component';
 import { ManageProductImagesComponent } from './inner-pages/manage-product-images/manage-product-images.component';
+import {debounceTime} from "rxjs";
+import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {ProductService} from "../../service/product.service";
+import {CurrencyPipe, NgForOf} from "@angular/common";
+import { ForexService } from '../../service/forex.service';
+import { ClipboardService } from '../../service/clipboard.service';
 
 @Component({
   selector: 'app-products',
@@ -17,13 +23,45 @@ import { ManageProductImagesComponent } from './inner-pages/manage-product-image
     CustomerStatusManagerComponent,
     MatIcon,
     MatIconButton,
+    ReactiveFormsModule,
+    NgForOf,
+    CurrencyPipe,
     MatTooltip
   ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
-export class ProductsComponent {
-  constructor(private matDialog: MatDialog) {
+export class ProductsComponent implements OnInit{
+  searchText = '';
+  page: any = 0;
+  size: any = 1;
+  count=0;
+  dataList:any[]=[];
+  rate: any = 0;
+
+  searchForm: FormGroup = new FormGroup({
+    text: new FormControl('')
+  });
+
+  constructor(private matDialog: MatDialog,
+    private productService: ProductService,
+    private forexService: ForexService,
+    private clipboardService: ClipboardService) {
+  }
+
+  ngOnInit(): void {
+
+    this.forexService.exchange('USD', 'LKR').subscribe(data => {
+      this.rate = data?.result?.LKR;
+      this.loadAllProducts();
+    });
+
+    this.searchForm.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe(data => {
+        this.searchText = data.text;
+        this.loadAllProducts();
+      })
   }
 
   openNewProductForm() {
@@ -31,6 +69,7 @@ export class ProductsComponent {
       width:'500px',
       disableClose:true
     });
+
 
     matDialogRef.afterClosed().subscribe(response=>{
       if(response){
@@ -42,7 +81,7 @@ export class ProductsComponent {
     let matDialogRef = this.matDialog.open(UpdateProductComponent,{
       width:'500px',
       disableClose:true,
-      data:product
+      data: {product: product}
     });
 
     matDialogRef.afterClosed().subscribe(response=>{
@@ -66,9 +105,34 @@ export class ProductsComponent {
   }
 
   private loadAllProducts() {
-
+    this.productService.search(this.page, this.size, this.searchText).subscribe(response => {
+      console.log(response);
+      this.dataList = response.data?.dataList;
+      this.count = response.data?.count;
+    });
   }
 
-  protected readonly confirm = confirm;
+  exchange(amount:number){}
+
+  deleteConfirm(item: any) {
+    if (confirm('are you sure?')) {
+      this.productService.delete(item?.propertyId).subscribe(response => {
+        this.loadAllProducts();
+      }, error => {
+        console.log(error?.error?.message);
+      })
+    }
+  }
+
+  getServerData(data: PageEvent) {
+    this.page = data?.pageIndex;
+    this.size = data?.pageSize;
+    this.loadAllProducts();
+  }
+
+  copyText(propertyId: any) {
+    this.clipboardService.copy(propertyId);
+
+  }
 
 }
