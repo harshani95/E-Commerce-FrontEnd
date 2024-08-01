@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
-import { ProductService } from '../../../../service/product.service';
+import { ProductService } from '../../../../service/product/product.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({

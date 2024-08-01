@@ -11,10 +11,10 @@ import { NewProductComponent } from './inner-pages/new-product/new-product.compo
 import { ManageProductImagesComponent } from './inner-pages/manage-product-images/manage-product-images.component';
 import {debounceTime} from "rxjs";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {ProductService} from "../../service/product.service";
+import {ProductService} from "../../service/product/product.service";
 import {CurrencyPipe, NgForOf} from "@angular/common";
-import { ForexService } from '../../service/forex.service';
-import { ClipboardService } from '../../service/clipboard.service';
+import { ForexService } from '../../service/forex/forex.service';
+import { ClipboardService } from '../../service/clipboard/clipboard.service';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
 @Component({

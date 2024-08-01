@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle} from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ProductService } from '../../../../service/product.service';
+import { ProductService } from '../../../../service/product/product.service';
 
 @Component({
   selector: 'app-new-product',

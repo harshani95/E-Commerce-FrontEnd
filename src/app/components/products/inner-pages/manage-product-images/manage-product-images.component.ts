@@ -8,7 +8,7 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ProductService} from "../../../../service/product.service";
+import {ProductService} from "../../../../service/product/product.service";
 
 @Component({
   selector: 'app-manage-product-images',
