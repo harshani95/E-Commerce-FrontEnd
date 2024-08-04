@@ -1,9 +1,10 @@
 <div class="container">
-    <img src="Top-Ecommerce-Websites.jpg" alt="Example Image">
-</div>
-
-<div style="display: flex; justify-content: center; margin-top: 20px;">
-    <button class="btn btn-success" routerLink="/dashboard">Login</button>
+    <form [formGroup]="form" (ngSubmit)="login()">
+        <input type="email" formControlName="email" placeholder="email">&nbsp;
+        <input type="text" formControlName="displayName" placeholder="display Name">&nbsp;
+        <input type="password" formControlName="password" placeholder="Password">&nbsp;
+        <input type="submit" value="Login">
+      </form>
     <button class="btn btn-primary" routerLink="/signup">Signup</button>
 </div>
 
