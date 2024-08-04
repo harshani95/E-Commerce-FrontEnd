@@ -4,7 +4,6 @@ import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../service/user/user.service';
 import { CookieManagerService } from '../../cookie/cookie-manager.service';
 import { HttpResponse } from '@angular/common/http';
-import { log } from 'console';
 import { first } from 'rxjs';
 
 @Component({
@@ -18,7 +17,8 @@ import { first } from 'rxjs';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  constructor(private userService: UserService, private router: Router, private cookieManagerService: CookieManagerService) { 
+  constructor(private userService: UserService, private router: Router,
+     private cookieManagerService: CookieManagerService) { 
   }
 
   form = new FormGroup({
