@@ -1,11 +1,17 @@
-<div class="container">
-    <form [formGroup]="form" (ngSubmit)="login()">
-        <input type="email" formControlName="email" placeholder="email">&nbsp;
-        <input type="text" formControlName="displayName" placeholder="display Name">&nbsp;
-        <input type="password" formControlName="password" placeholder="Password">&nbsp;
-        <input type="submit" value="Login">
-      </form>
-    <button class="btn btn-primary" routerLink="/signup">Signup</button>
-</div>
+<form [formGroup]="form" (ngSubmit)="login()">
+
+    <div class="mb-3">
+        <label class="form-label">Email address</label>
+        <input type="email"  class="form-control" formControlName="email" placeholder="Email">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" formControlName="password" placeholder="Password">
+    </div>
+    
+    <button class="btn btn-primary">Login</button>
+    <button class="btn btn-success" routerLink="/signup">Signup</button>
+</form>
 
 
